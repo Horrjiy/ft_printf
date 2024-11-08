@@ -6,35 +6,60 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:01:32 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 14:45:56 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:39:40 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	cfound(char f)
+int	cfound(char f, int *wrc)
 {
-	ft_putchar_fd(f, 1);
+	if (write(1, &f, 1) == -1)
+		return (-1);
+	(*wrc)++;
+	return (0);
 }
 
-void	sfound(char *f)
+int	sfound(char *f, int *wrc)
 {
 	size_t	temp;
 
+	if (f == NULL)
+	{
+		if (write(1, "(null)", 6) == -1)
+			return (-1);
+		(*wrc) += 6;
+		return (0);
+	}
 	temp = 0;
 	while (f[temp])
 	{
-		write(1, &f[temp], 1);
+		if (write(1, &f[temp], 1) == -1)
+			return (-1);
 		temp++;
+		(*wrc)++;
 	}
+	return (0);
 }
 
-void	difound(int f)
+int	difound(int f, int *wrc)
 {
-	ft_iputnbr(f);
+	if (ft_iputnbr(f, wrc) == -1)
+		return (-1);
+	return (0);
 }
 
-void	ufound(unsigned int f)
+int	ufound(unsigned int f, int *wrc)
 {
-	ft_iputunbr(f);
+	if (ft_iputunbr(f, wrc) == -1)
+		return (-1);
+	return (0);
+}
+
+int	percfound(int *wrc)
+{
+	if (write(1, "%%", 1) == -1)
+		return (-1);
+	(*wrc)++;
+	return (0);
 }

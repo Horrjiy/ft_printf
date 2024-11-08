@@ -6,23 +6,33 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:06:07 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 14:52:45 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/08 20:11:23 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_iputunbr(unsigned int n)
+static int	ft_puti(char c)
+{
+	if (write(1, &c, 1) == -1)
+		return (-1);
+	return (0);
+}
+
+int	ft_iputunbr(unsigned int n, int *wrc)
 {
 	if (n == 0)
 	{
 		if (write(1, "0", 1) == -1)
 			return (-1);
+		(*wrc)++;
 		return (0);
 	}
 	if (n >= 10)
-		ft_iputunbr((n / 10));
-	ft_putchar_fd((n % 10 + '0'), 1);
+		ft_iputunbr((n / 10), wrc);
+	if (ft_puti((n % 10 + '0')) == -1)
+		return (-1);
+	(*wrc)++;
 	return (0);
 }
 

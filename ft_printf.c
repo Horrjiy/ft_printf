@@ -6,57 +6,66 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:28:07 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 14:51:28 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/08 20:34:44 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	percentage(const char *str, va_list arglist, int i)
+static int	percentage(const char *str, va_list arglist, int i, int *wrc)
 {
-	(i)++;
+	int	error;
+
 	if (str[i] == '\0')
 		return (-1);
 	else if (str[i] == 'c')
-		cfound(va_arg(arglist, int));
+		error = cfound(va_arg(arglist, int), wrc);
 	else if (str[i] == 's')
-		sfound(va_arg(arglist, char *));
+		error = sfound(va_arg(arglist, char *), wrc);
 	else if (str[i] == 'd' || str[i] == 'i')
-		difound(va_arg(arglist, int));
+		error = difound(va_arg(arglist, int), wrc);
 	else if (str[i] == 'u')
-		ufound(va_arg(arglist, unsigned int));
+		error = ufound(va_arg(arglist, unsigned int), wrc);
 	else if (str[i] == 'x')
-		lowxfound(va_arg(arglist, int));
+		error = lowxfound(va_arg(arglist, int), wrc);
 	else if (str[i] == 'X')
-		capxfound(va_arg(arglist, int));
+		error = capxfound(va_arg(arglist, int), wrc);
 	else if (str[i] == 'p')
-		pfound(va_arg(arglist, void *));
-	else if (str[i++] == '%')
-		write(1, "%%", 1);
+		error = pfound(va_arg(arglist, void *), wrc);
+	else if (str[i] == '%')
+		error = percfound(wrc);
 	else
 		return (-1);
-	return (i);
+	if (error == -1)
+		return (-1);
+	return (*wrc);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	arglist;
 	int		i;
+	int		wrc;
 
 	va_start(arglist, str);
 	i = 0;
+	wrc = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			i = percentage(str, arglist, i);
-			if (i == -1)
+			wrc = percentage(str, arglist, i + 1, &wrc);
+			if (wrc == -1)
 				return (-1);
+			i++;
 		}
-		else if (write(1, &str[i], 1) == -1)
-			return (-1);
+		else
+		{
+			if (write(1, &str[i], 1) == -1)
+				return (-1);
+			wrc++;
+		}
 		i++;
 	}
-	va_end(arglist);
-	return (i);
+	return (va_end(arglist), wrc);
 }

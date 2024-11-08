@@ -6,7 +6,7 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:35:04 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/07 16:30:43 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:42:30 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-int		ft_iputnbr(int n);
-int		ft_iputunbr(unsigned int n);
-void	ft_putnbr_hex(int n);
-void	ft_putnbr_hexc(int n);
+int		ft_iputnbr(int n, int *wrc);
+int		ft_iputunbr(unsigned int n, int *wrc);
+
 #endif
