@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   convfound.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 00:40:54 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 14:56:45 by mpoplow          ###   ########.fr       */
+/*   Created: 2024/11/08 14:01:32 by mpoplow           #+#    #+#             */
+/*   Updated: 2024/11/08 14:45:56 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdarg.h>
+#include "ft_printf.h"
 
-int		ft_printf(const char *str, ...);
-void	cfound(char f);
-void	sfound(char *f);
-void	difound(int f);
-void	ufound(unsigned int f);
-void	lowxfound(int f);
-void	capxfound(int f);
-void	pfound(void *f);
+void	cfound(char f)
+{
+	ft_putchar_fd(f, 1);
+}
 
-#endif
+void	sfound(char *f)
+{
+	size_t	temp;
+
+	temp = 0;
+	while (f[temp])
+	{
+		write(1, &f[temp], 1);
+		temp++;
+	}
+}
+
+void	difound(int f)
+{
+	ft_iputnbr(f);
+}
+
+void	ufound(unsigned int f)
+{
+	ft_iputunbr(f);
+}
