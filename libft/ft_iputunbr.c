@@ -6,7 +6,7 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:06:07 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 20:11:23 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/10 13:02:40 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_iputunbr(unsigned int n, int *wrc)
 		return (0);
 	}
 	if (n >= 10)
-		ft_iputunbr((n / 10), wrc);
+		if (ft_iputunbr((n / 10), wrc) == -1)
+			return (-1);
 	if (ft_puti((n % 10 + '0')) == -1)
 		return (-1);
 	(*wrc)++;
