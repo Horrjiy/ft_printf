@@ -6,15 +6,20 @@
 #    By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 00:44:19 by mpoplow           #+#    #+#              #
-#    Updated: 2024/11/08 22:36:15 by mpoplow          ###   ########.fr        #
+#    Updated: 2024/11/10 14:47:06 by mpoplow          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFILES = ft_printf.c convfound.c convfoundhex.c ft_putnbr_hex.c ft_putnbr_hexc.c ft_putnbr_address.c
+CFILES = ft_printf.c \
+putstrchar_sc_perc.c \
+putnbr_di.c putunbr_u.c \
+puthex_lowx.c puthex_capx.c puthexaddress_p.c \
+
 
 OFILES = $(CFILES:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
+
 
 NAME = libftprintf.a
 
@@ -24,8 +29,10 @@ $(NAME): $(OFILES)
 	cd libft && make all
 	cd ../
 	ar rcs $(NAME) $(OFILES)
-	ar -x libft/libft.a
-	ar rcs $(NAME) $(OFILES) *.o
+	cp libft/libft.a .
+	mv libft.a $(NAME)
+	ar rcs $(NAME) $(OFILES)
+	
 
 
 clean:
@@ -42,3 +49,4 @@ fclean:
 re: fclean $(NAME)
 
 .PHONY:  all clean fclean re
+

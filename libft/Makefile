@@ -6,7 +6,7 @@
 #    By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 20:46:28 by mpoplow           #+#    #+#              #
-#    Updated: 2024/11/08 22:03:40 by mpoplow          ###   ########.fr        #
+#    Updated: 2024/11/10 14:29:03 by mpoplow          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFILES = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_str
 			ft_calloc.c ft_strdup.c \
 			ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 			ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-			ft_iputnbr.c ft_iputunbr.c ft_putstrstr.c \
+			ft_putstrstr.c \
 
 OFILES = $(CFILES:.c=.o)
 

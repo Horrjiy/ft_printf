@@ -6,7 +6,7 @@
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:28:07 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/10 12:23:17 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/10 14:44:39 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static int	percentage(const char *str, va_list arglist, int i, int *wrc)
 	else if (str[i] == 'u')
 		error = ufound(va_arg(arglist, unsigned int), wrc);
 	else if (str[i] == 'x')
-		error = lowxfound(va_arg(arglist, long), wrc);
+		error = lowxfound(va_arg(arglist, unsigned int), wrc);
 	else if (str[i] == 'X')
-		error = capxfound(va_arg(arglist, size_t), wrc);
+		error = capxfound(va_arg(arglist, unsigned int), wrc);
 	else if (str[i] == 'p')
 		error = pfound(va_arg(arglist, void *), wrc);
 	else if (str[i] == '%')

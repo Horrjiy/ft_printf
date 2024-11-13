@@ -1,44 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convfoundhex.c                                     :+:      :+:    :+:   */
+/*   convfound.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 14:01:30 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/10 11:07:39 by mpoplow          ###   ########.fr       */
+/*   Created: 2024/11/08 14:01:32 by mpoplow           #+#    #+#             */
+/*   Updated: 2024/11/10 14:43:16 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	lowxfound(int f, int *wrc)
+int	cfound(char f, int *wrc)
 {
-	if (ft_putnbr_hex(f, wrc) == -1)
+	if (write(1, &f, 1) == -1)
 		return (-1);
+	(*wrc)++;
 	return (0);
 }
 
-int	capxfound(int f, int *wrc)
+int	sfound(char *f, int *wrc)
 {
-	if (ft_putnbr_hexc(f, wrc) == -1)
-		return (-1);
-	return (0);
-}
+	size_t	temp;
 
-int	pfound(void *f, int *wrc)
-{
-	if (write(1, "0x", 2) == -1)
-		return (-1);
-	*wrc += 2;
-	if (!f)
+	if (f == NULL)
 	{
-		if (write(1, "0", 1) == -1)
+		if (write(1, "(null)", 6) == -1)
 			return (-1);
-		(*wrc)++;
+		(*wrc) += 6;
 		return (0);
 	}
-	if (ft_putnbr_ad((uintptr_t)f, wrc) == -1)
+	temp = 0;
+	while (f[temp])
+	{
+		if (write(1, &f[temp], 1) == -1)
+			return (-1);
+		temp++;
+		(*wrc)++;
+	}
+	return (0);
+}
+
+int	percfound(int *wrc)
+{
+	if (write(1, "%%", 1) == -1)
 		return (-1);
+	(*wrc)++;
 	return (0);
 }

@@ -1,51 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convfound.c                                        :+:      :+:    :+:   */
+/*   putunbr_u.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 14:01:32 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/08 21:39:40 by mpoplow          ###   ########.fr       */
+/*   Created: 2024/10/27 13:06:07 by mpoplow           #+#    #+#             */
+/*   Updated: 2024/11/10 14:47:37 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	cfound(char f, int *wrc)
+static int	ft_puti(char c)
 {
-	if (write(1, &f, 1) == -1)
+	if (write(1, &c, 1) == -1)
 		return (-1);
-	(*wrc)++;
 	return (0);
 }
 
-int	sfound(char *f, int *wrc)
+static int	ft_iputunbr(unsigned int n, int *wrc)
 {
-	size_t	temp;
-
-	if (f == NULL)
+	if (n == 0)
 	{
-		if (write(1, "(null)", 6) == -1)
+		if (write(1, "0", 1) == -1)
 			return (-1);
-		(*wrc) += 6;
+		(*wrc)++;
 		return (0);
 	}
-	temp = 0;
-	while (f[temp])
-	{
-		if (write(1, &f[temp], 1) == -1)
+	if (n >= 10)
+		if (ft_iputunbr((n / 10), wrc) == -1)
 			return (-1);
-		temp++;
-		(*wrc)++;
-	}
-	return (0);
-}
-
-int	difound(int f, int *wrc)
-{
-	if (ft_iputnbr(f, wrc) == -1)
+	if (ft_puti((n % 10 + '0')) == -1)
 		return (-1);
+	(*wrc)++;
 	return (0);
 }
 
@@ -56,10 +44,19 @@ int	ufound(unsigned int f, int *wrc)
 	return (0);
 }
 
-int	percfound(int *wrc)
-{
-	if (write(1, "%%", 1) == -1)
-		return (-1);
-	(*wrc)++;
-	return (0);
-}
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	ft_putnbr_fd(0, 1);
+// 	printf("\n");
+// 	ft_putnbr_fd(-1, 1);
+// 	printf("\n");
+// 	ft_putnbr_fd(-89, 1);
+// 	printf("\n");
+// 	ft_putnbr_fd(65, 1);
+// 	printf("\n");
+// 	ft_putnbr_fd(2147483647, 1);
+// 	printf("\n");
+// 	ft_putnbr_fd(-2147483648, 1);
+// 	printf("\n");
+// }

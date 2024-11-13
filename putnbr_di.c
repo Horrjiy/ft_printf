@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iputunbr.c                                      :+:      :+:    :+:   */
+/*   putnbr_di.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpoplow <mpoplow@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:06:07 by mpoplow           #+#    #+#             */
-/*   Updated: 2024/11/10 13:02:40 by mpoplow          ###   ########.fr       */
+/*   Updated: 2024/11/10 14:47:33 by mpoplow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-static int	ft_puti(char c)
+static int	ft_put(char c)
 {
 	if (write(1, &c, 1) == -1)
 		return (-1);
 	return (0);
 }
 
-int	ft_iputunbr(unsigned int n, int *wrc)
+static int	edgecase(int n, int *wrc)
 {
 	if (n == 0)
 	{
@@ -28,12 +28,49 @@ int	ft_iputunbr(unsigned int n, int *wrc)
 		(*wrc)++;
 		return (0);
 	}
-	if (n >= 10)
-		if (ft_iputunbr((n / 10), wrc) == -1)
+	else if (n == -2147483648)
+	{
+		if (write(1, "-2147483648", 11) == -1)
 			return (-1);
-	if (ft_puti((n % 10 + '0')) == -1)
+		*wrc += 11;
+		return (0);
+	}
+	else
 		return (-1);
-	(*wrc)++;
+}
+
+static int	ft_iputnbr(int n, int *wrc)
+{
+	if (n == 0 || n == -2147483648)
+	{
+		return (edgecase(n, wrc));
+	}
+	else if (n == -2147483648)
+	{
+		if (write(1, "-2147483648", 11) == -1)
+			return (-1);
+		*wrc += 11;
+		return (0);
+	}
+	if (n < 0)
+	{
+		n = -n;
+		if (write(1, "-", 1) == -1)
+			return (-1);
+		(*wrc)++;
+	}
+	if (n >= 10)
+		if (ft_iputnbr((n / 10), wrc) == -1)
+			return (-1);
+	if (ft_put((n % 10 + '0')) == -1)
+		return (-1);
+	return ((*wrc)++, 0);
+}
+
+int	difound(int f, int *wrc)
+{
+	if (ft_iputnbr(f, wrc) == -1)
+		return (-1);
 	return (0);
 }
 
